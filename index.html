@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Fake Bank</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .account {
+            margin: 0 auto;
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .account h2 {
+            text-align: center;
+        }
+        .account p {
+            text-align: center;
+            font-size: 24px;
+        }
+        .account button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            background-color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="account">
+        <h2>My Account</h2>
+        <p id="balance">$0.00</p>
+        <button id="deposit">Deposit</button>
+        <button id="withdraw">Withdraw</button>
+    </div>
+       <script>
+        // Initialize web3
+        if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        } else {
+            // Set the provider you want from Web3.providers           
+		// index.html:50  Uncaught ReferenceError: Web3 is not defined 
+		   web3 = new Web3(new Web3.providers.HttpProvider("http://localhost/CS4301Project/index.html")); // This should point to your Ethereum node
+        }
+
+        // Get the contract instance
+        var MyContract = web3.eth.contract(ABI_DEFINITION);
+        var contractInstance = MyContract.at('0x78e97bcc5b5dd9ed228fed7a4887c0d7287344a9');
+
+        // Call a function from your smart contract
+        var result = contractInstance.myFunction.call(arg1, arg2, {from: web3.eth.accounts[0]});
+
+        // Display the result
+        // You can use document.getElementById or similar to display the result on your page
+    </script>
+</body>
+</html>
