@@ -1,18 +1,13 @@
 {
     "ABI_DEFINITION": [
         {
-            "constant": true,
-            "inputs": [],
-            "name": "myFunction",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "string"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "pure",
-            "type": "function"
+            "constant": false,
+    "inputs": [],
+    "name": "deposit",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
         }
     ]
 }
