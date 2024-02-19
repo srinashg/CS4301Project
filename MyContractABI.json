@@ -1,0 +1,18 @@
+{
+    "ABI_DEFINITION": [
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "myFunction",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function"
+        }
+    ]
+}
