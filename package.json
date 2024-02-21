@@ -1,0 +1,14 @@
+{
+  "name": "cs4301project",
+  "version": "1.0.0",
+  "description": "CS 4301 team project",
+  "main": "main.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "truffle": "^5.11.5"
+  }
+}
