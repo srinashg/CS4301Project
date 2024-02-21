@@ -1,71 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>My Fake Bank</title>
-    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .account {
-            margin: 0 auto;
-            width: 300px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-        }
-        .account h2 {
-            text-align: center;
-        }
-        .account p {
-            text-align: center;
-            font-size: 24px;
-        }
-        .account button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin-top: 20px;
-            font-size: 18px;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            background-color: #007BFF;
-        }
-    </style>
-</head>
-<body>
-    <div class="account">
-        <h2>My Account</h2>
-        <p id="balance">$0.00</p>
-        <button id="deposit">Deposit</button>
-        <button id="withdraw">Withdraw</button>
-    </div>
-<script>
-fetch('MyContractABI.json')
-.then(response => response.json())
-.then(data => {
-    // Initialize web3
-    if (typeof web3 !== 'undefined') {
-        web3 = new Web3(web3.currentProvider);
-    } else {
-        // Set the provider you want from Web3.providers
-        web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545")); // This should point to your Ethereum node
-    }
-
-    // Get the contract instance
-    var MyContract = new web3.eth.Contract(data.ABI_DEFINITION, '0xBcA7a2cf7d2063ed7D46B7dbd17Ea4233D40eA84');
-
-    // Get the accounts
-    web3.eth.getAccounts().then(function(accounts) {
-        // Call a function from your smart contract
-        MyContract.methods.deposit().send({ from: accounts[0], value: web3.utils.toWei('0.1', 'ether') })
-        .then(result => {
-            // Display the result
-        });
-    });
-});
-</script>
-
-</body>
+    <head>
+        <title>My Fake Bank</title>
+        <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script type="module" src="./index.js"></script>
+        <link rel="stylesheet" href="./index.css">
+    </head>
+    <body>
+        <div class="account">
+            <h2>My Account</h2>
+            <h3>Your address</h3>
+            <p id="act_address"></p>
+            <p id="balance">... loading</p>
+            <label for="#amount">Transact ETH</label>
+            <input
+                type="number"
+                placeholder="Enter transaction amount"
+                id="transaction_amount_input"
+                step="0.001"
+            />
+            <button id="deposit_btn">Deposit</button>
+            <button id="withdraw_btn">Withdraw</button>
+        </div>
+    </body>
 </html>
