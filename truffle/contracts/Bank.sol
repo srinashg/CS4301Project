@@ -2,33 +2,47 @@
 pragma solidity ^0.8.0;
 
 contract Bank {
-    mapping(address => uint256) private balance;
-
-    constructor() {
-        // Perform initialization if needed
-        // For example, you can set initial balances for specific addresses
-        balance[msg.sender] = 1000; // Initialize the balance of the contract deployer
+    // Struct to represent a single transaction
+    struct Transaction {
+        address sender;     // Address of the sender
+        address receiver;   // Address of the receiver
+        uint256 amount;     // Amount of the transaction
+        uint256 timestamp;  // Timestamp of the transaction
     }
 
-    function deposit(uint256 amount) public payable {
-        require(amount > 0, "Deposit amount must be greater than 0");
-        balance[msg.sender] += amount;
+    // Array to store all transactions
+    Transaction[] public transactions;
+
+    // Function to add a new transaction
+    function addTransaction(address _receiver, uint256 _amount) public {
+        require(_receiver != address(0), "Invalid receiver address");
+        require(_amount > 0, "Invalid amount");
+
+        Transaction memory newTransaction = Transaction({
+            sender: msg.sender,
+            receiver: _receiver,
+            amount: _amount,
+            timestamp: block.timestamp
+        });
+
+        transactions.push(newTransaction);
     }
 
-    function transfer(uint256 amount, address recipient) public {
-        require(balance[msg.sender] >= amount, "Insufficient balance");
-        balance[msg.sender] -= amount;
-        payable(recipient).transfer(amount);
+    // Function to get the total number of transactions
+    function getTotalTransactions() public view returns (uint256) {
+        return transactions.length;
     }
 
-    function withdraw(uint256 amount) public payable {
-        require(amount > 0, "Withdrawal amount must be greater than 0");
-        require(balance[msg.sender] >= amount, "Insufficient balance");
+    // Function to get a specific transaction by index
+    function getTransaction(uint256 _index) public view returns (
+        address sender,
+        address receiver,
+        uint256 amount,
+        uint256 timestamp
+    ) {
+        require(_index < transactions.length, "Index out of bounds");
 
-        balance[msg.sender] -= amount;
-    }
-
-    function getBalance() public view returns (uint256) {
-        return balance[msg.sender];
+        Transaction memory transaction = transactions[_index];
+        return (transaction.sender, transaction.receiver, transaction.amount, transaction.timestamp);
     }
 }
