@@ -1,63 +1,63 @@
-{   
+{
     "ABI_DEFINITION": [
-        {
-            "inputs": [],
-            "stateMutability": "nonpayable",
-            "type": "constructor",
-            "signature": "constructor"
-        },
         {
             "inputs": [
                 {
                     "internalType": "uint256",
-                    "name": "amount",
+                    "name": "",
                     "type": "uint256"
                 }
             ],
-            "name": "deposit",
-            "outputs": [],
-            "stateMutability": "payable",
-            "type": "function",
-            "payable": true,
-            "signature": "0xb6b55f25"
-        },
-        {
-            "inputs": [
+            "name": "transactions",
+            "outputs": [
+                {
+                    "internalType": "address",
+                    "name": "sender",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "receiver",
+                    "type": "address"
+                },
                 {
                     "internalType": "uint256",
                     "name": "amount",
                     "type": "uint256"
                 },
                 {
-                    "internalType": "address",
-                    "name": "recipient",
-                    "type": "address"
+                    "internalType": "uint256",
+                    "name": "timestamp",
+                    "type": "uint256"
                 }
             ],
-            "name": "transfer",
-            "outputs": [],
-            "stateMutability": "nonpayable",
+            "stateMutability": "view",
             "type": "function",
-            "signature": "0xb7760c8f"
+            "constant": true,
+            "signature": "0x9ace38c2"
         },
         {
             "inputs": [
                 {
+                    "internalType": "address",
+                    "name": "_receiver",
+                    "type": "address"
+                },
+                {
                     "internalType": "uint256",
-                    "name": "amount",
+                    "name": "_amount",
                     "type": "uint256"
                 }
             ],
-            "name": "withdraw",
+            "name": "addTransaction",
             "outputs": [],
-            "stateMutability": "payable",
+            "stateMutability": "nonpayable",
             "type": "function",
-            "payable": true,
-            "signature": "0x2e1a7d4d"
+            "signature": "0x84a37273"
         },
         {
             "inputs": [],
-            "name": "getBalance",
+            "name": "getTotalTransactions",
             "outputs": [
                 {
                     "internalType": "uint256",
@@ -68,7 +68,43 @@
             "stateMutability": "view",
             "type": "function",
             "constant": true,
-            "signature": "0x12065fe0"
+            "signature": "0xb5c604ff"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_index",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getTransaction",
+            "outputs": [
+                {
+                    "internalType": "address",
+                    "name": "sender",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "receiver",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "amount",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "timestamp",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function",
+            "constant": true,
+            "signature": "0x33ea3dc8"
         }
     ]
 }

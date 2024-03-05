@@ -1,26 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Orbitron:wght@400..900&display=swap');
+
+:root{
+    --pink: rgb(243, 150, 255);
+    --green: rgb(192, 250, 255);
+}
+
 html {
     height: 100vh;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
     margin: 0;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
 }
+
+* {
+    font-family: "Montserrat", sans-serif;
+}
+
+h2, h3 {
+    font-weight: 500;
+}
+
+section:first-of-type {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 50px;
+    background-image: linear-gradient(45deg, var(--pink), var(--green));
+}
+
+#interraction {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    align-items: center;
+    width: 100%;
+    height: auto;
+}
+
+#navbar {
+    position: absolute;
+    width: 100vw;
+    padding: 20px 40px;
+    background-color: rgba(255, 252, 248, 0.7);
+    top: 0;
+    box-sizing: border-box;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.166);
+    display: flex;
+    justify-content: space-between;
+
+    & p {
+        margin: 0;
+        font-size: 15px
+    }
+    & button {
+        background-color: #00000000;
+        border: none;
+        border-bottom: 1px solid #ccc;
+        color: #ccc;
+        transition: 0.2s border-bottom , 0.2s color;
+    }
+    & button:hover {
+        border-bottom: 1px solid black;
+        color: black
+    }
+}
+
 .account {
-    width: auto;
-    max-width: 400px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    width: 325px;
+    height: 375px;
+    padding: 40px;
     display: flex;
     flex-direction: column;
     align-content: center;
     justify-content: space-between;
     overflow-wrap: break-word;
+    background-color: rgba(255, 252, 248, 0.7);
+    backdrop-filter: blur(20px);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.166);
 
     & input {
         font-size: 20px;
@@ -43,8 +103,39 @@ body {
     padding: 10px;
     margin-top: 20px;
     font-size: 18px;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    background-color: #007BFF;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    color: #bbb;
+    background-color: #ffffff52;
+    transition: 0.2s background-color, 0.2s color, 0.2s border;
+}
+
+.account button:hover {
+    border: 1px solid #ffffff;
+    color: #ffffff;
+}
+
+.account button:first-of-type:hover, #transfer_btn:hover {
+    background-color: rgb(94, 209, 248);
+}
+
+.account button:last-of-type:hover {
+    background-color: var(--pink)
+}
+
+#balance, #balance-header {
+    margin: 0;
+    font-family: "Orbitron", sans-serif;
+    text-align: center;
+    font-weight: 500;
+}
+
+#transaction_amount_input, #transfer_amount_input, #transfer_user_input {
+    background-color: rgba(0,0,0,0);
+    border-bottom: 1px rgb(168, 168, 168) solid;
+    padding-bottom: 2px;
+}
+
+#transfer_user_input {
+    margin-bottom: 20px;
 }
