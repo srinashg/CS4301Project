@@ -4,24 +4,55 @@
         <title>My Fake Bank</title>
         <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
         <script type="module" src="./index.js"></script>
         <link rel="stylesheet" href="./index.css">
     </head>
     <body>
-        <div class="account">
-            <h2>My Account</h2>
-            <h3>Your address</h3>
-            <p id="act_address"></p>
-            <p id="balance">... loading</p>
-            <label for="#amount">Transact ETH</label>
-            <input
-                type="number"
-                placeholder="Enter transaction amount"
-                id="transaction_amount_input"
-                step="0.001"
-            />
-            <button id="deposit_btn">Deposit</button>
-            <button id="withdraw_btn">Withdraw</button>
-        </div>
+        <section>
+            <div id="navbar">
+                <p>Nguyen, Jeremy</p>
+                <button><p>Log out</p></button>
+            </div>
+            
+            <div>
+                <h1 id="balance-header">ETH</h1>
+                <h1 id="balance">... loading</h1>
+            </div>
+
+            <div id="interraction">
+                <div class="account">
+                    <h2>My Account</h2>
+                    <label for="#transaction_amount_input">Transact ETH</label>
+                    <input
+                        type="number"
+                        placeholder="transaction amount"
+                        id="transaction_amount_input"
+                        step="0.001"
+                    />
+                    <button id="deposit_btn">Deposit</button>
+                    <button id="withdraw_btn">Withdraw</button>
+                </div>
+                <div class="account">
+                    <h2>Transfer ETH</h2>
+                    <label for="#transfer_user_input">Recipient</label>
+                    <input
+                        type="text"
+                        placeholder="username"
+                        id="transfer_user_input"
+                        step="0.001"
+                    />
+                    <label for="#transfer_amount_input">Transfer ETH</label>
+                    <input
+                        type="number"
+                        placeholder="transfer amount"
+                        id="transfer_amount_input"
+                        step="0.001"
+                    />
+                    <button id="transfer_btn">Transfer</button>
+                </div>
+            </div>
+        </section>
     </body>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </html>
