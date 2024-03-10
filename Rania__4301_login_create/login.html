@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+    <div class="container"> 
+        <h1> Login </h1>
+        <form class="loginForm" id="loginForm">
+            
+            <input 
+                type="text" 
+                id="username" 
+                name="username" 
+                placeholder="Username"
+            >
+            <input
+                id="password"
+                name="password"
+                type="password"                                    
+                placeholder="Password"
+            >
+            <input 
+                type="submit" 
+                onclick="login(event)" 
+                value="Login" 
+                class="loginBtn"
+            >
+
+            <div style="margin-top: 20px;">
+                <span class="span-text">
+                    No account yet ? 
+                </span>  
+                <a href="signUp.html"> Sign Up </a>
+            </div>  
+        </form>         
+    </div> 
+
+    <script>
+        function login(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get input values
+            var usernameInput = document.getElementById("username");
+            var passwordInput = document.getElementById("password");
+            var username = usernameInput.value;
+            var password = passwordInput.value;
+
+            // Check if username and password are correct (for demonstration, just check if they are not empty)
+            if (username.trim() === "" && password.trim() === "") {
+                alert("Please enter username and password.");
+            } 
+            else if (username.trim() === "" || password.trim() === "") {
+                alert("1 or more fields is missing.");
+            }
+            else {
+                // For demonstration, just show an alert with the entered username
+                alert("Welcome, " + username + "!");
+                // You can redirect to another page or perform other actions here after successful login
+                usernameInput.value = "";
+                passwordInput.value = "";
+            }
+        }   
+    </script>
+
+</body>
+</html>
