@@ -5,15 +5,26 @@ CS 4301 team project
 When you just cloned the project for the first time, you need to install
 all the necessary packages. We do it via npm.
 ```bash
-cd CS4301Project    #Enter project directory
+cd CS4301Project                    #Enter project directory
 
-npm install         #Installing packages
+##### CLIENT SETUP #####
+cd client
+npm install                         #Installing packages
+
+##### BACKEND SETUP #####
+cd ../backend
+python3 -m venv venv
+source venv/bin/activate            #Activate virtual env
+pip install -r requirements.txt     #Install python packages
+
+cd backend
+cp example.env .env                 #Then fill in the secrets
 ```
 
-# Running the project
+# Running the client
 This will run parcel to auto reload the client.
 ```bash
-# In the project directory
+# In the /client directory
 
 npm run start
 ```
@@ -57,3 +68,12 @@ CONTRACT_ADDRESS=[the address you just grabbed, no quotes]
 ```
 
 Now restart the client, you should be good.
+
+# Running the backend
+This will run Django 5.0
+```bash
+# In the /backend directory
+
+source venv/bin/activate
+python3 manage.py runserver
+```
