@@ -1,36 +1,47 @@
-from django.contrib.auth import authenticate, login, logout
-from django.http import JsonResponse
-from django.views import View
-from django.urls import path
-from .views import MyApiView
+from rest_framework.views import APIView
+from rest_framework import status
+from .models import User
+from django.contrib.auth.hashers import make_password, check_password
+from rest_framework.response import Response
+from rest_framework import serializers
+from rest_framework_simplejwt.tokens import RefreshToken
 
-class MyApiView(View):
-    # ... existing methods ...
+class UsersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "email",
+            "first_name",
+            "last_name",
+            "address"
+        ]
 
-    def login(self, request, *args, **kwargs):
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            data = {
-                "message": "User successfully logged in"
-            }
-        else:
-            data = {
-                "message": "Invalid username or password"
-            }
-        return JsonResponse(data)
 
-    def logout(self, request, *args, **kwargs):
-        logout(request)
-        data = {
-            "message": "User successfully logged out"
-        }
-        return JsonResponse(data)
+class ViewUsers(APIView):
+    # retrieve access token to make authorized api calls
+    def get(self, request, format=None):
+        data = request.GET
+        user = User.objects.get(email=data['email'])
 
-urlpatterns = [
-    # ... existing patterns ...
-    path('api/login/', MyApiView.as_view(), name='my_api_login'),
-    path('api/logout/', MyApiView.as_view(), name='my_api_logout'),
-]
+        if not check_password(data['password'], user.password):
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+        # generate access token
+        refresh_token = RefreshToken.for_user(user)
+        user = UsersSerializer(user).data
+        user['access_token'] = str(refresh_token.access_token)
+
+        return Response(user)
+
+    def post(self, request, format=None):
+        data = request.data
+
+        User.objects.create(
+            password=make_password(data['password']),
+            email=data['email'],
+            first_name=data['first_name'],
+            last_name=data['last_name']
+        )
+
+        return Response(status=status.HTTP_200_OK)
