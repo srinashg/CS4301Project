@@ -30,6 +30,20 @@ section:first-of-type {
     justify-content: center;
     gap: 50px;
     background-image: linear-gradient(45deg, var(--pink), var(--green));
+
+    & * {
+        opacity: 0;
+        animation: softload 0.8s forwards ease-in-out;
+    }
+}
+
+@keyframes softload {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 100%;
+    }
 }
 
 #interraction {
