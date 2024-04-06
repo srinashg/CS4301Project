@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "test",
-    "start": "parcel index.html --port 5050"
+    "start": "parcel *.html --port 5050"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +19,7 @@
     "truffle": "^5.11.5"
   },
   "dependencies": {
+    "axios": "^1.6.8",
     "dotenv": "^16.4.5",
     "jquery": "^3.7.1",
     "parcel": "^2.11.0",

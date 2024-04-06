@@ -1,21 +1,9 @@
 import Web3 from "web3";
 import config from "./configuration.json";
 import $ from 'jquery';
-import Toastify from 'toastify-js'
+import { showNotif } from "./utils";
+import axios from 'axios';
 require("dotenv").config();
-
-const showNotif = (text) => {
-    Toastify({
-        text: text,
-        duration: 3000,
-        close: true,
-        gravity: "bottom", // `top` or `bottom`
-        position: "right", // `left`, `center` or `right`
-        style: {
-            background: "linear-gradient(to right, rgb(44, 130, 187),  rgb(243, 150, 255))",
-        }
-    }).showToast();
-}
 
 const web3 = new Web3("http://localhost:7545");
 const contract = new web3.eth.Contract(config.ABI_DEFINITION, process.env.CONTRACT_ADDRESS)
@@ -25,8 +13,11 @@ let fakeBank;
 const getAccount = async () => {
     try {
         accountList = await web3.eth.getAccounts()
-        if (!account) {
+        if (localStorage.getItem('token')) {
             showNotif("Signed in successfully");
+        }
+        else {
+            window.location.href = '/';
         }
         account = accountList[0];
         fakeBank = accountList[accountList.length - 1]
@@ -34,7 +25,12 @@ const getAccount = async () => {
         $("#act_address").text(account);
         let balance = await web3.eth.getBalance(account)
         balance = web3.utils.fromWei(balance, "ether").toString()
-        $("#balance").text(`${balance.split('.')[0]} . ${balance.split('.')[1]}`)
+        $("#balance").text(`${balance.split('.')[0]} . ${balance.split('.')[1]}`);
+
+        const first_name = localStorage.getItem('first_name');
+        const last_name = localStorage.getItem('last_name');
+
+        $('#user-name-nav').text(`${first_name} ${last_name}`);
     }
     catch (err) {
         console.error(err)
@@ -118,4 +114,16 @@ const withdraw = async () => {
 };
 $("#withdraw_btn").on('click', () => {
     withdraw();
+})
+
+const logout = () => {
+    localStorage.clear();
+    showNotif("Logout successful");
+    setTimeout(() => {
+        window.location.href = "/";
+    }, 3000
+    );
+}
+$('#logout-btn').on('click', () => {
+    logout();
 })

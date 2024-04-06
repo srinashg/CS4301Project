@@ -97,7 +97,7 @@ section:first-of-type {
     text-align: center;
     font-size: 20px;
 }
-.account button {
+.account button, .login-btn {
     display: block;
     width: 100%;
     padding: 10px;
@@ -110,12 +110,12 @@ section:first-of-type {
     transition: 0.2s background-color, 0.2s color, 0.2s border;
 }
 
-.account button:hover {
+.account button:hover, .login-btn:hover {
     border: 1px solid #ffffff;
     color: #ffffff;
 }
 
-.account button:first-of-type:hover, #transfer_btn:hover {
+.account button:first-of-type:hover, #transfer_btn:hover, .login-btn:hover {
     background-color: rgb(94, 209, 248);
 }
 
@@ -138,4 +138,18 @@ section:first-of-type {
 
 #transfer_user_input {
     margin-bottom: 20px;
+}
+
+.login-section {
+    align-items: center;
+}
+
+.signup-form {
+    width: auto;
+}
+
+.name-field {
+    display: flex;
+    gap: 20px;
+    width: 100%;
 }

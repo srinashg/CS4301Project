@@ -44,4 +44,4 @@ class ViewUsers(APIView):
             last_name=data['last_name']
         )
 
-        return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_201_CREATED)
