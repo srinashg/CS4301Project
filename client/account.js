@@ -16,22 +16,28 @@ const login = async () => {
     const email = $('#email').val();
     const password = $('#password').val();
 
-    const response = await axios.get(
-        `${proxy}/user?email=${email}&password=${password}`
-    );
+    try {
+        const response = await axios.get(
+            `${proxy}/user?email=${email}&password=${password}`
+        );
 
-    const data = response.data;
-    localStorage.setItem('first_name', data.first_name);
-    localStorage.setItem('last_name', data.last_name);
-    localStorage.setItem('address', data.address);
-    localStorage.setItem('token', data.access_token);
-    localStorage.setItem('email', data.email);
+        const data = response.data;
+        localStorage.setItem('first_name', data.first_name);
+        localStorage.setItem('last_name', data.last_name);
+        localStorage.setItem('address', data.address);
+        localStorage.setItem('token', data.access_token);
+        localStorage.setItem('email', data.email);
 
-    showNotif("Signed in successfully");
-    setTimeout(() => {
-        window.location.href = '/transaction.html';
-    }, 3000
-);
+        showNotif("Signed in successfully");
+        setTimeout(() => {
+                window.location.href = '/transaction.html';
+            }, 3000
+        );
+    } catch (err) {
+        if (err.response.status === 401) {
+            showNotif("Invalid credentials");
+        }
+    }
 }
 $('#login-btn').on('click', () => {
     login();
