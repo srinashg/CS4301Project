@@ -1,7 +1,11 @@
 import Web3 from "web3";
 import config from "./configuration.json";
 import $ from 'jquery';
-import { showNotif } from "./utils";
+import {
+    showNotif,
+    getAuthHeader,
+    proxy
+} from "./utils";
 import axios from 'axios';
 require("dotenv").config();
 
@@ -13,13 +17,11 @@ let fakeBank;
 const getAccount = async () => {
     try {
         accountList = await web3.eth.getAccounts()
-        if (localStorage.getItem('token')) {
-            showNotif("Signed in successfully");
-        }
-        else {
+        if (!localStorage.getItem('token')) {
             window.location.href = '/';
         }
-        account = accountList[0];
+
+        account = accountList[localStorage.getItem('address')];
         fakeBank = accountList[accountList.length - 1]
 
         $("#act_address").text(account);
@@ -38,34 +40,59 @@ const getAccount = async () => {
 }
 getAccount();
 
-const addTransaction = (sender, receiver, amount) => {
-    contract.methods.addTransaction(receiver, amount).send(
-        {
-            from: sender,
-            gas: 6721975
-        }
-    )
-    .on('receipt', function(receipt) {
-        console.log(receipt)
-    });
+// Add record to BC
+const addTransaction = async (sender, receiver, senderEmail, receiverEmail, amount) => {
+    try {
+        const receipt = await contract.methods.addTransaction(receiver, amount, senderEmail, receiverEmail).send(
+            {
+                from: sender,
+                gas: 6721975
+            }
+        );
+        console.log(receipt);
+    } catch (error) {
+        throw new Error(error);
+    }
 };
 
 
 const transfer = async () => {
     try {
+        let email = $('#transfer_user_input').val();
         let amount = $("#transfer_amount_input").val();
         amount = web3.utils.toWei(amount, "ether");
+
+        const response = await axios.get(
+            `${proxy}/transaction?email=${email}`,
+            getAuthHeader()
+        );
+
+        if (amount <= 0 || amount === null) {
+            showNotif('please input transfer amount');
+            return;
+        }
+
+        const recipientAddress = response.data.recipient_address;
+        const recipientEmail = response.data.recipient_email;
+        const recipient = (await web3.eth.getAccounts())[recipientAddress]
+
         await web3.eth.sendTransaction({
-            to: (await web3.eth.getAccounts())[1],
+            to: recipient,
             from: account,
             value: amount
         })
-        addTransaction(account, (await web3.eth.getAccounts())[1], amount);
+
+        const userEmail = localStorage.getItem('email');
+        await addTransaction(account, recipient, userEmail, recipientEmail, amount);
+
         getAccount();
         showNotif("Fund transaction complete")
     }
     catch (err) {
-        console.error(err)
+        if (err.response) {
+            showNotif(err.response.data.message);
+        }
+        console.error(err);
     }
 };
 $("#transfer_btn").on('click', () => {
@@ -73,7 +100,7 @@ $("#transfer_btn").on('click', () => {
 })
 
 
-const deposit = async() => {
+const deposit = async () => {
     try {
         let amount = $("#transaction_amount_input").val();
         amount = web3.utils.toWei(amount, "ether");
@@ -82,7 +109,9 @@ const deposit = async() => {
             from: fakeBank,
             value: amount
         })
-        addTransaction(fakeBank, account, amount);
+
+        const userEmail = localStorage.getItem('email');
+        await addTransaction(fakeBank, account, 'admin@admin.admin', userEmail, amount);
         getAccount();
         showNotif("Fund deposit complete")
     }
@@ -104,7 +133,10 @@ const withdraw = async () => {
             from: account,
             value: amount
         })
-        addTransaction(account, fakeBank, amount);
+        
+        const userEmail = localStorage.getItem('email');
+        await addTransaction(account, fakeBank, userEmail, 'admin@admin.admin', amount);
+
         getAccount();
         showNotif("Fund withdraw complete")
     }

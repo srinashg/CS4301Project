@@ -1,5 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from .models import User
 from django.contrib.auth.hashers import make_password, check_password
 from rest_framework.response import Response
@@ -45,3 +46,28 @@ class ViewUsers(APIView):
         )
 
         return Response(status=status.HTTP_201_CREATED)
+
+
+class Transaction(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        email = request.GET['email']
+
+        if str(email) == str(request.user):
+            return Response({
+                'message': 'you cannot be the recipient'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            recipient = User.objects.get(email=email)
+
+            return Response({
+                'recipient_address': int(recipient.address),
+                'recipient_email': recipient.email
+            })
+
+        except User.DoesNotExist:
+            return Response({
+                'messsage': 'User not found'
+            }, status=status.HTTP_404_NOT_FOUND)

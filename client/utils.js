@@ -14,3 +14,18 @@ export const showNotif = (text) => {
         }
     }).showToast();
 }
+
+export const getAuthHeader = () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = '/';
+    }
+
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+    };
+
+    return config;
+}

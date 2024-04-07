@@ -21,6 +21,16 @@
                     "type": "address"
                 },
                 {
+                    "internalType": "string",
+                    "name": "senderEmail",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "receiverEmail",
+                    "type": "string"
+                },
+                {
                     "internalType": "uint256",
                     "name": "amount",
                     "type": "uint256"
@@ -47,13 +57,23 @@
                     "internalType": "uint256",
                     "name": "_amount",
                     "type": "uint256"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_senderEmail",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_receiverEmail",
+                    "type": "string"
                 }
             ],
             "name": "addTransaction",
             "outputs": [],
             "stateMutability": "nonpayable",
             "type": "function",
-            "signature": "0x84a37273"
+            "signature": "0x6d1b6bb1"
         },
         {
             "inputs": [],
