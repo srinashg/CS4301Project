@@ -111,7 +111,7 @@ const deposit = async () => {
         })
 
         const userEmail = localStorage.getItem('email');
-        await addTransaction(fakeBank, account, 'admin@admin.admin', userEmail, amount);
+        await addTransaction(fakeBank, account, 'depositrecords@chase.com', userEmail, amount);
         getAccount();
         showNotif("Fund deposit complete")
     }
@@ -135,7 +135,7 @@ const withdraw = async () => {
         })
         
         const userEmail = localStorage.getItem('email');
-        await addTransaction(account, fakeBank, userEmail, 'admin@admin.admin', amount);
+        await addTransaction(account, fakeBank, userEmail, 'depositrecords@chase.com', amount);
 
         getAccount();
         showNotif("Fund withdraw complete")
