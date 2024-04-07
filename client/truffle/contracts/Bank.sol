@@ -6,6 +6,8 @@ contract Bank {
     struct Transaction {
         address sender;     // Address of the sender
         address receiver;   // Address of the receiver
+        string senderEmail;
+        string receiverEmail;
         uint256 amount;     // Amount of the transaction
         uint256 timestamp;  // Timestamp of the transaction
     }
@@ -14,14 +16,25 @@ contract Bank {
     Transaction[] public transactions;
 
     // Function to add a new transaction
-    function addTransaction(address _receiver, uint256 _amount) public {
+    function addTransaction(
+        address _receiver,
+        uint256 _amount,
+        string calldata _senderEmail,
+        string calldata _receiverEmail
+    ) public {
         require(_receiver != address(0), "Invalid receiver address");
+        require(
+            keccak256(abi.encodePacked(_senderEmail)) != keccak256(abi.encodePacked(_receiverEmail)),
+            "You cannot transfer money to yourself"
+        );
         require(_amount > 0, "Invalid amount");
 
         Transaction memory newTransaction = Transaction({
             sender: msg.sender,
             receiver: _receiver,
             amount: _amount,
+            senderEmail: _senderEmail,
+            receiverEmail: _receiverEmail,
             timestamp: block.timestamp
         });
 
