@@ -26,6 +26,8 @@ This will run parcel to auto reload the client.
 ```bash
 # In the /client directory
 
+npm install #only run this the first time you run the frontend (it installs the 10 million packages that node uses)
+
 npm run start
 ```
 
