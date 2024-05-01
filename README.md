@@ -4,6 +4,8 @@ CS 4301 team project
 # Set Up Guide
 When you just cloned the project for the first time, you need to install
 all the necessary packages. We do it via npm.
+
+Please contact [jeremy nguyen](jeremu2907@gmail.com) for secrets variables.
 ```bash
 cd CS4301Project                    #Enter project directory
 
